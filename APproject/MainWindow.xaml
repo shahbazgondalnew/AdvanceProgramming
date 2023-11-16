@@ -16,7 +16,7 @@
         <Label Content="Password:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <PasswordBox x:Name="txtPassword" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="5,10,0,0" RenderTransformOrigin="0.507,0.009"/>
 
-        <Button Content="Login" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Margin="0,59,315,0" Click="Login_Click"/>
+        <Button Content="Login" Grid.Row="3" HorizontalAlignment="Right" Width="80" Margin="0,59,315,0" Click="Login_Click"/>
     </Grid>
 </Window>
    
