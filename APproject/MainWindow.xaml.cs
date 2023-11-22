@@ -50,6 +50,7 @@ namespace APproject
 
                     return count > 0;
                 }
+                connection.Close();
             }
         }
     }

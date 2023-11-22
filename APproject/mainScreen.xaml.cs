@@ -17,11 +17,56 @@ namespace APproject
     /// <summary>
     /// Interaction logic for mainScreen.xaml
     /// </summary>
+
+
+
+
+
+
+
+
+
     public partial class mainScreen : Window
     {
         public mainScreen()
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+
+            if (menuItem != null && menuItem.Tag != null)
+            {
+                string screenName = menuItem.Tag.ToString();
+
+                // Dynamically set the content based on the selected menu item
+                switch (screenName)
+                {
+                    case "FarmersScreen":
+                        contentArea.Content = new FarmersOp();
+                        break;
+
+                    case "ProductsScreen":
+                        contentArea.Content = new ProductsOp(); 
+                        break;
+
+                    case "CreditsScreen":
+                        contentArea.Content = new ProductsOp();
+                        break;
+
+                    case "CompanyScreen":
+                        contentArea.Content = new ProductsOp();
+                        break;
+
+                    case "ReportScreen":
+                        contentArea.Content = new ProductsOp();
+                        break;
+                }
+            }
+        }
     }
+
+
 }

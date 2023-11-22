@@ -7,6 +7,33 @@
         mc:Ignorable="d"
         Title="mainScreen" Height="450" Width="800">
     <Grid>
-        
+        <!-- Menu definition -->
+        <Menu>
+            <!-- First menu item -->
+            <MenuItem Header="Farmers" Click="MenuItem_Click" Tag="FarmersScreen">
+            </MenuItem>
+
+            <!-- Second menu item -->
+            <MenuItem Header="Products" Click="MenuItem_Click" Tag="ProductsScreen">
+            </MenuItem>
+
+            <!-- Third menu item -->
+            <MenuItem Header="Credit" Click="MenuItem_Click" Tag="CreditsScreen">
+            </MenuItem>
+
+            <!-- Fourth menu item -->
+            <MenuItem Header="Company" Click="MenuItem_Click" Tag="CompanyScreen">
+            </MenuItem>
+
+            <!-- Fifth menu item -->
+            <MenuItem Header="Report" Click="MenuItem_Click" Tag="ReportScreen">
+            </MenuItem>
+        </Menu>
+
+        <!-- Content area -->
+        <ContentControl x:Name="contentArea">
+            <!-- Default content or initially selected screen goes here -->
+            <TextBlock Text="Welcome to the main screen content!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </ContentControl>
     </Grid>
 </Window>

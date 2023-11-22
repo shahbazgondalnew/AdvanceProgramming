@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="APproject.ProductsOp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- DataGrid to display products -->
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10">
+            <DataGrid.Columns>
+                <!-- Define your data columns -->
+                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductID}" />
+                <DataGridTextColumn Header="Product Name" Binding="{Binding Product_Name}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Policy" Binding="{Binding Policy}" />
+                <DataGridTextColumn Header="Batch" Binding="{Binding Batch}" />
+                <DataGridTextColumn Header="Expire Date" Binding="{Binding ExpireDate}" />
+                <DataGridTextColumn Header="Quality" Binding="{Binding Quality}" />
+
+                <!-- Edit column with button -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit" Click="EditButton_Click" Tag="{Binding}" Margin="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Delete column with button -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete" Click="DeleteButton_Click" Tag="{Binding}" Margin="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Buttons for CRUD operations -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Add" Click="AddButton_Click" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
