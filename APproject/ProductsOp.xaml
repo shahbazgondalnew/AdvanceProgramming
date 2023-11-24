@@ -8,13 +8,31 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <!-- Search bar -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <TextBox x:Name="searchTextBox" Width="200" Margin="5" TextChanged="SearchTextBox_TextChanged"/>
+            <TextBlock Text="Search..." VerticalAlignment="Center" Foreground="Gray" Margin="5">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=searchTextBox, Path=Text.Length}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
 
         <!-- DataGrid to display products -->
         <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
-                <!-- Define your data columns -->
+                <!-- Existing columns -->
                 <DataGridTextColumn Header="Product ID" Binding="{Binding ProductID}" />
                 <DataGridTextColumn Header="Product Name" Binding="{Binding Product_Name}" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
@@ -41,10 +59,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+
+
         </DataGrid>
 
-        <!-- Buttons for CRUD operations -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+        <!-- Buttons for CRUD operations and pagination -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Previous" Click="PreviousPage_Click" Margin="5"/>
+            <Button Content="Next" Click="NextPage_Click" Margin="5"/>
             <Button Content="Add" Click="AddButton_Click" Margin="5"/>
         </StackPanel>
     </Grid>

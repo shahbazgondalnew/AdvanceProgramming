@@ -2,6 +2,18 @@
 using System.Data.SqlClient;
 using System.Windows;
 
+
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
 namespace APproject
 {
     public partial class MainWindow : Window
@@ -13,6 +25,21 @@ namespace APproject
         {
             InitializeComponent();
         }
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // Your logic for password changed event
+        }
+
+        private void txtEmail_TextChanged(object sender, RoutedEventArgs e)
+        {
+            // Your logic for text changed event
+        }
+
+        private void textEmail_MouseDown(object sender, RoutedEventArgs e)
+        {
+            // Your logic for mouse down event
+        }
+
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
