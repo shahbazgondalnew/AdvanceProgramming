@@ -62,11 +62,11 @@ namespace APproject
                                 allProducts.Add(product);
                             }
 
-                            // Initialize dataGrid with all products
-                            dataGrid.ItemsSource = allProducts;
+                            // Create a ListCollectionView for sorting and filtering
+                            productsView = new ListCollectionView(allProducts);
 
-                            // Set up the CollectionView for filtering
-                            productsView = CollectionViewSource.GetDefaultView(allProducts);
+                            // Initialize dataGrid with all products
+                            dataGrid.ItemsSource = productsView;
                         }
                     }
                     connection.Close();
@@ -94,6 +94,7 @@ namespace APproject
             {
                 string searchText = searchTextBox.Text.ToLower();
 
+                // Apply filter to the ListCollectionView
                 productsView.Filter = item =>
                 {
                     if (item is Product product)
@@ -105,12 +106,94 @@ namespace APproject
                 };
             }
         }
+        private void ExpireDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (expireDatePicker.SelectedDate.HasValue)
+            {
+                DateTime selectedDate = expireDatePicker.SelectedDate.Value;
+
+                // Your code for handling the selected date change
+                // You can filter your data based on the selected date or perform any other actions
+            }
+        }
+
+
+        private void DataGrid_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            // Prevent automatic sorting to handle it manually
+            e.Handled = true;
+
+            // Get the column being sorted
+            DataGridColumn column = e.Column;
+
+            // Determine the sort direction
+            ListSortDirection direction = (column.SortDirection != ListSortDirection.Ascending)
+                ? ListSortDirection.Ascending
+                : ListSortDirection.Descending;
+
+            // Clear previous sorting
+            dataGrid.Items.SortDescriptions.Clear();
+
+            // Apply the new sorting
+            dataGrid.Items.SortDescriptions.Add(new SortDescription(column.SortMemberPath, direction));
+
+            // Set the sort direction on the column header
+            column.SortDirection = direction;
+        }
+
+
 
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
             currentPage++;
             productsView.Refresh();
         }
+        private void SortButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sortComboBox.SelectedItem is ComboBoxItem selectedItem)
+            {
+                string sortMemberPath = selectedItem.Tag.ToString();
+                SortDataGrid(sortMemberPath);
+            }
+            else
+            {
+                MessageBox.Show("No item selected in the ComboBox.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void FilterByButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (expireDatePicker.SelectedDate.HasValue)
+            {
+                DateTime selectedDate = expireDatePicker.SelectedDate.Value;
+
+                // Apply filter based on the selected Expire Date
+                productsView.Filter = item =>
+                {
+                    if (item is Product product)
+                    {
+                        return product.ExpireDate <= selectedDate;
+                    }
+                    return false;
+                };
+            }
+            else
+            {
+                // If no date is selected, remove the filter
+                productsView.Filter = null;
+            }
+        }
+        private void SortDataGrid(string sortMemberPath)
+        {
+            if (productsView != null)
+            {
+                productsView.SortDescriptions.Clear();
+                productsView.SortDescriptions.Add(new SortDescription(sortMemberPath, ListSortDirection.Ascending));
+                productsView.Refresh();
+            }
+        }
+
+
 
         private void PreviousPage_Click(object sender, RoutedEventArgs e)
         {

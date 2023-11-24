@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -12,33 +14,47 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Search bar for filtering by Expiry Date -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,10" Width="384">
+            <DatePicker x:Name="expireDatePicker" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateEnd="{x:Static sys:DateTime.Now}" Width="125" Margin="5" SelectedDateChanged="ExpireDatePicker_SelectedDateChanged"/>
+
+            <!-- Sort ComboBox -->
+            <ComboBox x:Name="sortComboBox" Grid.Row="0" HorizontalAlignment="Right" Margin="10" SelectedIndex="0">
+                <ComboBoxItem Content="Sort By:" IsEnabled="False"/>
+                <ComboBoxItem Content="Product ID" Tag="ProductID"/>
+                <ComboBoxItem Content="Product Name" Tag="Product_Name"/>
+                <ComboBoxItem Content="Price" Tag="Price"/>
+                <ComboBoxItem Content="Policy" Tag="Policy"/>
+                <ComboBoxItem Content="Batch" Tag="Batch"/>
+                <ComboBoxItem Content="Expire Date" Tag="ExpireDate"/>
+                <ComboBoxItem Content="Quality" Tag="Quality"/>
+            </ComboBox>
+
+            <!-- Sort button -->
+            <Button Content="Sort By" Click="SortButton_Click" Margin="5" Height="30"/>
+
+            <!-- Filter By button -->
+            <Button Content="Filter By" Click="FilterByButton_Click" Margin="5" Height="27" RenderTransformOrigin="0.378,0.612"/>
+        </StackPanel>
+
         <!-- Search bar -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <TextBox x:Name="searchTextBox" Width="200" Margin="5" TextChanged="SearchTextBox_TextChanged"/>
+            <TextBox x:Name="searchTextBox" Width="214" TextChanged="SearchTextBox_TextChanged"/>
             <TextBlock Text="Search..." VerticalAlignment="Center" Foreground="Gray" Margin="5">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=searchTextBox, Path=Text.Length}" Value="0">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
+                <!-- TextBlock.Style... -->
             </TextBlock>
         </StackPanel>
 
         <!-- DataGrid to display products -->
-        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10"
+                  CanUserSortColumns="True" Sorting="DataGrid_Sorting">
             <DataGrid.Columns>
-                <!-- Existing columns -->
                 <DataGridTextColumn Header="Product ID" Binding="{Binding ProductID}" />
                 <DataGridTextColumn Header="Product Name" Binding="{Binding Product_Name}" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
                 <DataGridTextColumn Header="Policy" Binding="{Binding Policy}" />
                 <DataGridTextColumn Header="Batch" Binding="{Binding Batch}" />
-                <DataGridTextColumn Header="Expire Date" Binding="{Binding ExpireDate}" />
+                <DataGridTextColumn Header="Expire Date" Binding="{Binding ExpireDate, StringFormat=\{0:dd/MM/yyyy\}}" />
                 <DataGridTextColumn Header="Quality" Binding="{Binding Quality}" />
 
                 <!-- Edit column with button -->
@@ -59,15 +75,19 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-
-
         </DataGrid>
 
         <!-- Buttons for CRUD operations and pagination -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Previous" Click="PreviousPage_Click" Margin="5"/>
-            <Button Content="Next" Click="NextPage_Click" Margin="5"/>
-            <Button Content="Add" Click="AddButton_Click" Margin="5"/>
-        </StackPanel>
+        <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Previous" Click="PreviousPage_Click" Margin="5" Height="23"/>
+            <Button Content="Next" Click="NextPage_Click" Margin="5" Height="25"/>
+            <Button Content="Add" Click="AddButton_Click" Margin="5" Height="27" Grid.Column="2"/>
+        </Grid>
     </Grid>
 </UserControl>
