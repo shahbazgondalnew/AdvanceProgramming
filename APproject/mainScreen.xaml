@@ -6,32 +6,52 @@
         xmlns:local="clr-namespace:APproject"
         mc:Ignorable="d"
         Title="mainScreen" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Style for the logo image -->
+        <Style x:Key="LogoImageStyle" TargetType="{x:Type Image}">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+
+        <!-- Style for the custom menu -->
+        <Style x:Key="CustomMenuStyle" TargetType="{x:Type Menu}">
+            <Setter Property="Background" Value="#FFF0F0F0"/>
+            <!-- Set the background color of the menu -->
+            <Setter Property="BorderBrush" Value="#FFD0D0D0"/>
+            <!-- Set the border color of the menu -->
+            <Setter Property="BorderThickness" Value="1"/>
+            <!-- Set the border thickness of the menu -->
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <!-- Menu definition -->
-        <Menu>
-            <!-- First menu item -->
-            <MenuItem Header="Farmers" Click="MenuItem_Click" Tag="FarmersScreen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Customized Menu definition -->
+        <Menu x:Name="customMenu" Style="{StaticResource CustomMenuStyle}">
+            <!-- Logo as the first menu item -->
+            <MenuItem Grid.Row="0">
+                <MenuItem.Header>
+                    <Border Background="#FFFFFF" Margin="5">
+                        <!-- Set a different shade of white for the logo background -->
+                        <Image Style="{StaticResource LogoImageStyle}" Source="Image/Logo.png"/>
+                    </Border>
+                </MenuItem.Header>
             </MenuItem>
 
-            <!-- Second menu item -->
-            <MenuItem Header="Products" Click="MenuItem_Click" Tag="ProductsScreen">
-            </MenuItem>
-
-            <!-- Third menu item -->
-            <MenuItem Header="Credit" Click="MenuItem_Click" Tag="CreditsScreen">
-            </MenuItem>
-
-            <!-- Fourth menu item -->
-            <MenuItem Header="Company" Click="MenuItem_Click" Tag="CompanyScreen">
-            </MenuItem>
-
-            <!-- Fifth menu item -->
-            <MenuItem Header="Report" Click="MenuItem_Click" Tag="ReportScreen">
-            </MenuItem>
+            <!-- Other menu items -->
+            <MenuItem Header="Farmers" Click="MenuItem_Click" Tag="FarmersScreen"/>
+            <MenuItem Header="Products" Click="MenuItem_Click" Tag="ProductsScreen"/>
+            <MenuItem Header="Credit" Click="MenuItem_Click" Tag="CreditsScreen"/>
+            <MenuItem Header="Company" Click="MenuItem_Click" Tag="CompanyScreen"/>
+            <MenuItem Header="Report" Click="MenuItem_Click" Tag="ReportScreen"/>
         </Menu>
 
         <!-- Content area -->
-        <ContentControl x:Name="contentArea">
+        <ContentControl x:Name="contentArea" Grid.Row="1">
             <!-- Default content or initially selected screen goes here -->
             <TextBlock Text="Welcome to the main screen content!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ContentControl>

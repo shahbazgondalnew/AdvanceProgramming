@@ -1,0 +1,15 @@
+﻿<Window x:Class="APproject.EditCompany"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edit Company" Height="300" Width="400">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Edit Company" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <Label Content="Company Name:"/>
+            <TextBox x:Name="companyNameTextBox" Width="200" Margin="0,0,0,10"/>
+
+            <Button Content="Save Changes" Width="100" Height="30" Click="SaveChanges_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

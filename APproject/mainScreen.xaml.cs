@@ -57,7 +57,7 @@ namespace APproject
                         break;
 
                     case "CompanyScreen":
-                        contentArea.Content = new ProductsOp();
+                        contentArea.Content = new compOP();
                         break;
 
                     case "ReportScreen":
