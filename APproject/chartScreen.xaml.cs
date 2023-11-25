@@ -103,7 +103,7 @@ namespace APproject
                             {
                                 new ColumnSeries
                                 {
-                                    Title = "Expiry Quantity",
+                                    Title = "Expiry",
                                     Values = barValues
                                 }
                             };
@@ -115,9 +115,10 @@ namespace APproject
                             {
                                 PieSeries.Add(new PieSeries
                                 {
-                                    Title = Labels[i],
+                                    Title = Labels[i], // Set the title to the month label
                                     Values = new ChartValues<ObservableValue> { new ObservableValue(pieValues[i].Value) },
                                     Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sliceColors[i])),
+                                    DataLabels = true, // Set to true to display data labels
                                 });
                             }
                         }
