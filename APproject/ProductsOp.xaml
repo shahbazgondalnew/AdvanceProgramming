@@ -85,9 +85,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Previous" Click="PreviousPage_Click" Margin="5" Height="23"/>
-            <Button Content="Next" Click="NextPage_Click" Margin="5" Height="25"/>
-            <Button Content="Add" Click="AddButton_Click" Margin="5" Height="27" Grid.Column="2"/>
+            <Button Content="&#9664;" Click="PreviousPage_Click" Margin="-19,132,0,167" Height="23" HorizontalAlignment="Left" Width="14"/>
+            <Button Content="&#9654;" Click="NextPage_Click" Margin="0,132,33,167" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Right" Width="14"/>
+
+            <Button Content="Add" Click="AddButton_Click" Margin="-17,160,33,135" Height="27" Grid.ColumnSpan="3"/>
         </Grid>
     </Grid>
 </UserControl>

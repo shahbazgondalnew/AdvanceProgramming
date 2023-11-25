@@ -80,5 +80,18 @@ namespace APproject
                 connection.Close();
             }
         }
+
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+           
+              // Create an instance of the SignUpWindow
+                SignUpWindow signUpWindow = new SignUpWindow();
+
+                // Show the SignUpWindow
+                signUpWindow.Show();
+            this.Close();
+            
+
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace APproject
                         break;
 
                     case "ReportScreen":
-                        contentArea.Content = new ProductsOp();
+                        contentArea.Content = new chartScreen();
                         break;
                 }
             }
