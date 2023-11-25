@@ -45,7 +45,7 @@ namespace APproject
                 switch (screenName)
                 {
                     case "FarmersScreen":
-                        contentArea.Content = new FarmersOp();
+                        contentArea.Content = new FarmerOp();
                         break;
 
                     case "ProductsScreen":

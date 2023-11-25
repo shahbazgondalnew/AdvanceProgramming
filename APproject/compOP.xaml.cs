@@ -218,7 +218,7 @@ namespace APproject
             if (selectedCompany != null)
             {
                 // Open the EditCompanyWindow for editing the selected company
-                EditCompanyWindow editWindow = new EditCompanyWindow(selectedCompany);
+                EditCompany editWindow = new EditCompany(selectedCompany);
                 editWindow.ShowDialog();
 
                 // Refresh the DataGrid after editing
