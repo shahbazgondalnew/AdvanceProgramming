@@ -22,6 +22,12 @@ namespace APproject
         public ProductsOp()
         {
             InitializeComponent();
+            ComboBoxItem defaultItem = sortComboBox.Items.OfType<ComboBoxItem>().FirstOrDefault(item => item.Tag?.ToString() == "Batch");
+
+            if (defaultItem != null)
+            {
+                sortComboBox.SelectedItem = defaultItem;
+            }
 
             // Load data when the control is initialized
             LoadData();

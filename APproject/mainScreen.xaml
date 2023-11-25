@@ -37,7 +37,7 @@
                 <MenuItem.Header>
                     <Border Background="#FFFFFF" Margin="5">
                         <!-- Set a different shade of white for the logo background -->
-                        <Image Style="{StaticResource LogoImageStyle}" Source="Image/Logo.png"/>
+                        <Image Style="{StaticResource LogoImageStyle}" Source="/Logo.png"/>
                     </Border>
                 </MenuItem.Header>
             </MenuItem>
@@ -48,10 +48,16 @@
             <MenuItem Header="Credit" Click="MenuItem_Click" Tag="CreditsScreen"/>
             <MenuItem Header="Company" Click="MenuItem_Click" Tag="CompanyScreen"/>
             <MenuItem Header="Report" Click="MenuItem_Click" Tag="ReportScreen"/>
+            <MenuItem x:Name="addProductMenuItem" Header="Add Product" Click="AddProductMenuItem_Click" Visibility="Collapsed"/>
+        </Menu>
+
+        <!-- Logout Menu -->
+        <Menu Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <MenuItem Header="Logout" Click="LogoutMenuItem_Click"/>
         </Menu>
 
         <!-- Content area -->
-        <ContentControl x:Name="contentArea" Grid.Row="1">
+        <ContentControl x:Name="contentArea" Grid.Row="1" >
             <!-- Default content or initially selected screen goes here -->
             <TextBlock Text="Welcome to the main screen content!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ContentControl>

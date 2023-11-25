@@ -15,11 +15,58 @@
         </Grid.RowDefinitions>
 
         <!-- Search bar for filtering by Expiry Date -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,10" Width="384">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,10" Width="446">
             <DatePicker x:Name="expireDatePicker" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateEnd="{x:Static sys:DateTime.Now}" Width="125" Margin="5" SelectedDateChanged="ExpireDatePicker_SelectedDateChanged"/>
 
             <!-- Sort ComboBox -->
             <ComboBox x:Name="sortComboBox" Grid.Row="0" HorizontalAlignment="Right" Margin="10" SelectedIndex="0">
+                <ComboBox.Resources>
+                    <Style x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="20" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                x:Name="Border"
+                                Grid.ColumnSpan="2"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                />
+                                        <Border
+                                Grid.Column="0"
+                                Margin="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0,0,1,0"
+                                CornerRadius="5,0,0,5"
+                                />
+                                        <Path
+                                x:Name="Arrow"
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="M 0 0 L 4 4 L 8 0 Z"
+                                Fill="White"
+                                />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="true">
+                                            <Setter TargetName="Arrow" Property="Data" Value="M 0 4 L 4 0 L 8 4 Z"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.Resources>
+
+                <!-- ComboBox items -->
                 <ComboBoxItem Content="Sort By:" IsEnabled="False"/>
                 <ComboBoxItem Content="Product ID" Tag="ProductID"/>
                 <ComboBoxItem Content="Product Name" Tag="Product_Name"/>
@@ -30,11 +77,46 @@
                 <ComboBoxItem Content="Quality" Tag="Quality"/>
             </ComboBox>
 
-            <!-- Sort button -->
-            <Button Content="Sort By" Click="SortButton_Click" Margin="5" Height="30"/>
+
+
+            <Button Content="Sort by" Click="SortButton_Click" Height="27" Margin="5" Width="62" Background="#FF292998">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Blue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="DarkBlue" BorderThickness="1" CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
 
             <!-- Filter By button -->
-            <Button Content="Filter By" Click="FilterByButton_Click" Margin="5" Height="27" RenderTransformOrigin="0.378,0.612"/>
+            <Button Content="Filter by" Click="FilterByButton_Click" Height="27" Margin="5" Width="62" Background="#FF292998">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Blue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="DarkBlue" BorderThickness="1" CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
         </StackPanel>
 
         <!-- Search bar -->
@@ -61,22 +143,65 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Edit" Click="EditButton_Click" Tag="{Binding}" Margin="5"/>
+                            <Button Content="Edit" Click="EditButton_Click" Tag="{Binding}" Margin="5">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="Green"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Width" Value="60"/>
+                                        <Setter Property="Height" Value="25"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" BorderBrush="DarkGreen" BorderThickness="1" CornerRadius="5">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
 
                 <!-- Delete column with button -->
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Delete" Click="DeleteButton_Click" Tag="{Binding}" Margin="5"/>
+                            <Button Content="Delete" Click="DeleteButton_Click" Tag="{Binding}" Margin="5">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="Red"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Width" Value="60"/>
+                                        <Setter Property="Height" Value="25"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" BorderBrush="DarkRed" BorderThickness="1" CornerRadius="5">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
 
+        <!-- Buttons for CRUD operations and pagination -->
         <!-- Buttons for CRUD operations and pagination -->
         <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="10">
             <Grid.ColumnDefinitions>
@@ -85,10 +210,17 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="&#9664;" Click="PreviousPage_Click" Margin="-19,132,0,167" Height="23" HorizontalAlignment="Left" Width="14"/>
-            <Button Content="&#9654;" Click="NextPage_Click" Margin="0,132,33,167" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Right" Width="14"/>
-
-            <Button Content="Add" Click="AddButton_Click" Margin="-17,160,33,135" Height="27" Grid.ColumnSpan="3"/>
+            <Button Click="PreviousPage_Click" Margin="5" Height="23">
+                <Button.Content>
+                    <TextBlock Text="&#9664;" FontSize="18"/>
+                </Button.Content>
+            </Button>
+            <Button Click="NextPage_Click" Margin="5" Height="25" Grid.Column="1">
+                <Button.Content>
+                    <TextBlock Text="&#9654;" FontSize="18"/>
+                </Button.Content>
+            </Button>
         </Grid>
+
     </Grid>
 </UserControl>

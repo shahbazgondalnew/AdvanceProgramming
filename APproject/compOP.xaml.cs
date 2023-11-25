@@ -22,6 +22,12 @@ namespace APproject
         public compOP()
         {
             InitializeComponent();
+            ComboBoxItem defaultItem = sortComboBox.Items.OfType<ComboBoxItem>().FirstOrDefault(item => item.Tag?.ToString() == "Balance");
+
+            if (defaultItem != null)
+            {
+                sortComboBox.SelectedItem = defaultItem;
+            }
 
             // Load data when the control is initialized
             LoadData();

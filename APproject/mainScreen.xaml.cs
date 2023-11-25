@@ -49,23 +49,48 @@ namespace APproject
                         break;
 
                     case "ProductsScreen":
-                        contentArea.Content = new ProductsOp(); 
+                        contentArea.Content = new ProductsOp();
+                        addProductMenuItem.Visibility = Visibility.Visible;
                         break;
 
                     case "CreditsScreen":
                         contentArea.Content = new ProductsOp();
+                        addProductMenuItem.Visibility = Visibility.Collapsed;
                         break;
 
                     case "CompanyScreen":
                         contentArea.Content = new compOP();
+                        addProductMenuItem.Visibility = Visibility.Visible;
                         break;
 
                     case "ReportScreen":
                         contentArea.Content = new chartScreen();
+                        addProductMenuItem.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
         }
+        private void AddProductMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            AddProductWindow addpro = new AddProductWindow();
+            addpro.Show();
+        }
+
+        private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to log out?", "Logout Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // Assuming MainWindow is your login or main window
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+
+                // Close the current window
+                this.Close();
+            }
+        }
+
     }
 
 
