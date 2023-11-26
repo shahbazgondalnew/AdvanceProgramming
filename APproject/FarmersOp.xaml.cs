@@ -28,10 +28,10 @@ namespace APproject
                 sortComboBox.SelectedItem = defaultItem;
             }
 
-            // Load data when the control is initialized
+           
             LoadData();
 
-            // Initialize pagination
+            
             InitializePagination();
         }
 
@@ -43,7 +43,7 @@ namespace APproject
                 {
                     connection.Open();
 
-                    string sql = "SELECT * FROM Farmer"; // Assuming your table is named 'Farmer'
+                    string sql = "SELECT * FROM Farmer"; 
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -60,17 +60,16 @@ namespace APproject
                                     Contact = Convert.ToString(reader["contact"]),
                                     Address = Convert.ToString(reader["address"]),
                                     Name = Convert.ToString(reader["name"])
-                                    // Add other properties based on your Farmer class
+                                  
                                 };
 
 
                                 allFarmers.Add(farmer);
                             }
 
-                            // Create a ListCollectionView for sorting and filtering
                             farmersView = new ListCollectionView(allFarmers);
 
-                            // Initialize dataGrid with all farmers
+                            
                             dataGrid.ItemsSource = farmersView;
                         }
                     }
@@ -99,12 +98,12 @@ namespace APproject
             {
                 string searchText = searchTextBox.Text.ToLower();
 
-                // Apply filter to the ListCollectionView
+               
                 farmersView.Filter = item =>
                 {
                     if (item is Farmer farmer)
                     {
-                        // Adjust the properties based on your Farmer class
+                       
                         return farmer.Name.ToString().Contains(searchText) ||
                                farmer.Address
                                .ToLower().Contains(searchText);
@@ -116,24 +115,24 @@ namespace APproject
 
         private void DataGrid_Sorting(object sender, DataGridSortingEventArgs e)
         {
-            // Prevent automatic sorting to handle it manually
+            
             e.Handled = true;
 
-            // Get the column being sorted
+            
             DataGridColumn column = e.Column;
 
-            // Determine the sort direction
+            
             ListSortDirection direction = (column.SortDirection != ListSortDirection.Ascending)
                 ? ListSortDirection.Ascending
                 : ListSortDirection.Descending;
 
-            // Clear previous sorting
+           
             dataGrid.Items.SortDescriptions.Clear();
 
-            // Apply the new sorting
+           
             dataGrid.Items.SortDescriptions.Add(new SortDescription(column.SortMemberPath, direction));
 
-            // Set the sort direction on the column header
+           
             column.SortDirection = direction;
         }
 
@@ -167,23 +166,23 @@ namespace APproject
 
         private void FilterByButton_Click(object sender, RoutedEventArgs e)
         {
-            // Add code for filtering based on specific criteria
+           
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // Add code for adding a new farmer
+            
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            // Assuming you have a way to get the selected farmer (replace this with your logic)
+            
             Farmer selectedFarmer = GetSelectedFarmer();
 
-            // Check if a farmer is selected
+            
             if (selectedFarmer != null)
             {
-                // Open the EditFarmerWindow with the selected farmer
+               
                 EditFarmerWindow editF = new EditFarmerWindow(selectedFarmer);
                 editF.ShowDialog();
             }
@@ -193,54 +192,53 @@ namespace APproject
             }
         }
 
-        // Replace this method with your logic to get the selected farmer
+        
         private Farmer GetSelectedFarmer()
         {
-            // Implement your logic to get the selected farmer, for example, from the DataGrid
-            // Return the selected farmer or null if none is selected
+           
             return dataGrid.SelectedItem as Farmer;
         }
 
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            // Check if an item is selected in the DataGrid
+            
             if (dataGrid.SelectedItem != null)
             {
-                // Confirm the deletion (optional)
+               
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this farmer?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Get the selected farmer from the DataGrid
+                   
                     Farmer selectedFarmer = (Farmer)dataGrid.SelectedItem;
 
-                    // Assuming you have a database connection (replace connectionString with your actual connection string)
+                   
                    
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
 
-                        // SQL DELETE statement
+                       
                         string deleteQuery = "DELETE FROM farmer WHERE farmer_id = @FarmerID";
 
                         using (SqlCommand command = new SqlCommand(deleteQuery, connection))
                         {
-                            // Replace FarmerID with the actual ID property of your Farmer class
+                            
                             command.Parameters.AddWithValue("@FarmerID", selectedFarmer.FarmerID);
 
-                            // Execute the DELETE statement
+                            
                             command.ExecuteNonQuery();
                         }
                     }
 
-                    // Refresh the DataGrid
-                    LoadData();// Assuming LoadFarmers is a method to reload the farmers from the database
+                   
+                    LoadData();
                 }
             }
             else
             {
-                // Inform the user that no farmer is selected
+               
                 MessageBox.Show("Please select a farmer to delete.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

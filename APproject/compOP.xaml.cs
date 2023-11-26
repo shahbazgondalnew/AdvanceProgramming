@@ -29,10 +29,10 @@ namespace APproject
                 sortComboBox.SelectedItem = defaultItem;
             }
 
-            // Load data when the control is initialized
+            
             LoadData();
 
-            // Initialize pagination
+            
             InitializePagination();
         }
 
@@ -100,7 +100,7 @@ namespace APproject
             {
                 string searchText = searchTextBox.Text.ToLower();
 
-                // Apply filter to the ListCollectionView
+               
                 companiesView.Filter = item =>
                 {
                     if (item is Company company)
@@ -168,7 +168,7 @@ namespace APproject
         return;
     }
 
-    // Filter based on address equality to "Faisalabad"
+    
     companiesView.Filter = item =>
     {
         if (item is Company company)
@@ -204,32 +204,32 @@ namespace APproject
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open a new window for adding a new product
+           
             AddProductWindow addWindow = new AddProductWindow();
             addWindow.ShowDialog();
 
-            // Refresh the DataGrid after adding a new product
+           
             LoadData();
-            InitializePagination(); // Reset pagination after adding a new item
+            InitializePagination(); 
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the clicked button
+           
             Button btn = (Button)sender;
 
-            // Access the data item (Company) associated with the clicked row
+            
             Company selectedCompany = (Company)btn.Tag;
 
             if (selectedCompany != null)
             {
-                // Open the EditCompanyWindow for editing the selected company
+               
                 EditCompany editWindow = new EditCompany(selectedCompany);
                 editWindow.ShowDialog();
 
-                // Refresh the DataGrid after editing
+                
                 LoadData();
-                InitializePagination(); // Reset pagination after editing
+                InitializePagination(); 
             }
             else
             {
@@ -239,12 +239,11 @@ namespace APproject
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            // Handle menu item click event here
-            // You can use the sender parameter to identify which menu item was clicked
+            
         }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            // Your delete button logic goes here
+            
         }
 
         private void DeleteCompany(int companyId)

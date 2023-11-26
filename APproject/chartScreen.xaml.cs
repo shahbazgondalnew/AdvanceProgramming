@@ -27,7 +27,7 @@ namespace APproject
 
         public ChartViewModel()
         {
-            // Initialize the ViewModel with data from the database
+           
             InitializeData();
         }
 
@@ -35,14 +35,14 @@ namespace APproject
         {
             try
             {
-                // TODO: Update connection string with your database information
+                
                 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    // Fetch data from the Product table (assuming your table is named 'Product')
+                    
                     string sql = "SELECT ExpireDate, Quality FROM Product";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -53,7 +53,7 @@ namespace APproject
                             ChartValues<ObservableValue> barValues = new ChartValues<ObservableValue>();
                             ChartValues<ObservableValue> pieValues = new ChartValues<ObservableValue>();
 
-                            // Initialize data structures to store quantity per month
+                            
                             Dictionary<string, int> quantityByMonth = new Dictionary<string, int>();
 
                             while (reader.Read())
@@ -61,7 +61,7 @@ namespace APproject
                                 DateTime expireDate = Convert.ToDateTime(reader["ExpireDate"]);
                                 int quantity = Convert.ToInt32(reader["Quality"]);
 
-                                // Group data by month
+                              
                                 string monthLabel = expireDate.ToString("MMMM");
 
                                 if (quantityByMonth.ContainsKey(monthLabel))
@@ -74,7 +74,7 @@ namespace APproject
                                 }
                             }
 
-                            // Sample colors for each month (replace with your desired colors)
+                           
                             List<string> sliceColors = new List<string>
                             {
                                 "#FF4500", // OrangeRed
@@ -91,7 +91,7 @@ namespace APproject
                                 "#FF69B4"  // HotPink
                             };
 
-                            // Populate Labels, BarValues, and PieValues based on grouped data
+                            
                             foreach (var kvp in quantityByMonth)
                             {
                                 Labels.Add(kvp.Key);
@@ -110,15 +110,15 @@ namespace APproject
 
                             PieSeries = new SeriesCollection();
 
-                            // Populate PieSeries with data and custom colors
+                          
                             for (int i = 0; i < Labels.Count; i++)
                             {
                                 PieSeries.Add(new PieSeries
                                 {
-                                    Title = Labels[i], // Set the title to the month label
+                                    Title = Labels[i], 
                                     Values = new ChartValues<ObservableValue> { new ObservableValue(pieValues[i].Value) },
                                     Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sliceColors[i])),
-                                    DataLabels = true, // Set to true to display data labels
+                                    DataLabels = true,
                                 });
                             }
                         }
@@ -131,7 +131,7 @@ namespace APproject
             }
             catch (Exception ex)
             {
-                // Handle exceptions, e.g., log or display an error message
+               
                 Console.WriteLine($"Error fetching data: {ex.Message}");
             }
         }

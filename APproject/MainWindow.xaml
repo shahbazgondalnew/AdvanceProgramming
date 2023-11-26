@@ -10,28 +10,28 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Company Logo -->
+        
         <Image Source="/Lo.png" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
 
-        <!-- Company Name with Motto -->
+       
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Desi Engro" FontSize="18" FontWeight="Bold"/>
             <TextBlock Text="Empowering Dreams, Cultivating Futures" FontSize="12" Opacity="0.8"/>
         </StackPanel>
 
-        <!-- Circular Shape - Blue -->
+        
         <Ellipse Width="100" Height="100" Fill="#4EB1B6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,20,0,0"/>
 
-        <!-- Circular Shape - Green -->
+       
         <Ellipse Width="100" Height="100" Fill="#61A63B" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="410,0,0,0"/>
 
-        <!-- Circular Shape - Purple -->
+        
         <Ellipse Width="100" Height="100" Fill="#8359A3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="469,40,0,0" Grid.RowSpan="2"/>
 
-        <!-- Circular Shape - Orange -->
+        
         <Ellipse Width="100" Height="100" Fill="#E17F28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,0,0,0"/>
 
-        <!-- Login Form -->
+        
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -91,7 +91,7 @@
             </Button>
         </Grid>
 
-        <!-- Additional Text -->
+        
         <TextBlock Grid.Row="3" Text="© 2023 Desi Engro. All rights reserved." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="201,57,0,0" Opacity="0.5"/>
     </Grid>
 </Window>

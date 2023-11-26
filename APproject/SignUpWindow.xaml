@@ -10,28 +10,28 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Company Logo -->
+       
         <Image Source="/Lo.png" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
 
-        <!-- Company Name with Motto -->
+       
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Desi Engro" FontSize="18" FontWeight="Bold"/>
             <TextBlock Text="Empowering Dreams, Cultivating Futures" FontSize="12" Opacity="0.8"/>
         </StackPanel>
 
-        <!-- Circular Shape - Blue -->
+        
         <Ellipse Width="100" Height="100" Fill="#4EB1B6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,20,0,0"/>
 
-        <!-- Circular Shape - Green -->
+       
         <Ellipse Width="100" Height="100" Fill="#61A63B" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="410,0,0,0"/>
 
-        <!-- Circular Shape - Purple -->
+        
         <Ellipse Width="100" Height="100" Fill="#8359A3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="469,40,0,0" Grid.RowSpan="2"/>
 
-        <!-- Circular Shape - Orange -->
+       
         <Ellipse Width="100" Height="100" Fill="#E17F28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,0,0,0"/>
 
-        <!-- Sign Up Form -->
+        
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -40,23 +40,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- User's Name Field -->
+            
             <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0" FontSize="16" FontFamily="Bahnschrift SemiBold"/>
             <TextBox x:Name="txtName" Width="250" Margin="120,10,0,0" VerticalAlignment="Center" FontFamily="Bahnschrift SemiLight" FontSize="18"/>
 
-            <!-- User's Email Field -->
+            
             <Label Content="Email:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" FontSize="16" FontFamily="Bahnschrift SemiBold"/>
             <TextBox x:Name="txtEmail" Grid.Row="1" Width="250" Margin="120,10,0,0" VerticalAlignment="Center" FontFamily="Bahnschrift SemiLight" FontSize="18"/>
 
-            <!-- User's Password Field -->
+           
             <Label Content="Password:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
             <PasswordBox x:Name="txtPassword" Grid.Row="2" Width="250" Margin="120,10,0,0" VerticalAlignment="Center" FontSize="16"/>
 
-            <!-- Confirm Password Field -->
+            
             <Label Content="Confirm Password:" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20" FontSize="16" FontFamily="Bahnschrift SemiBold"/>
             <PasswordBox x:Name="txtConfirmPassword" Grid.Row="3" Width="250" Margin="120,10,0,0" VerticalAlignment="Center" FontSize="16"/>
 
-            <!-- Sign Up Button -->
+           
             <Button Content="Sign Up" Grid.Row="4" Width="NaN" Height="NaN" Margin="252,87,212,-47" Click="SignUp_Click" FontSize="18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -81,7 +81,7 @@
             </Button>
         </Grid>
 
-        <!-- Additional Text -->
+        
         <TextBlock Grid.Row="3" Text="© 2023 Desi Engro. All rights reserved." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="201,57,0,0" Opacity="0.5"/>
     </Grid>
 </Window>

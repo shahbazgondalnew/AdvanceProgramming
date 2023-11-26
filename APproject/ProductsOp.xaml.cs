@@ -29,10 +29,10 @@ namespace APproject
                 sortComboBox.SelectedItem = defaultItem;
             }
 
-            // Load data when the control is initialized
+            
             LoadData();
 
-            // Initialize pagination
+           
             InitializePagination();
         }
 
@@ -173,7 +173,7 @@ namespace APproject
             {
                 DateTime selectedDate = expireDatePicker.SelectedDate.Value;
 
-                // Apply filter based on the selected Expire Date
+               
                 productsView.Filter = item =>
                 {
                     if (item is Product product)
@@ -185,7 +185,7 @@ namespace APproject
             }
             else
             {
-                // If no date is selected, remove the filter
+                
                 productsView.Filter = null;
             }
         }

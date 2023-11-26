@@ -27,17 +27,17 @@ namespace APproject
         }
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            // Your logic for password changed event
+            
         }
 
         private void txtEmail_TextChanged(object sender, RoutedEventArgs e)
         {
-            // Your logic for text changed event
+           
         }
 
         private void textEmail_MouseDown(object sender, RoutedEventArgs e)
         {
-            // Your logic for mouse down event
+            
         }
 
 
@@ -46,7 +46,7 @@ namespace APproject
             string username = txtUsername.Text;
             string password = txtPassword.Password;
 
-            // Check user credentials against the database
+            
             if (AuthenticateUser(username, password))
             {
                 MessageBox.Show("Login successful!");
@@ -84,10 +84,10 @@ namespace APproject
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
            
-              // Create an instance of the SignUpWindow
+              
                 SignUpWindow signUpWindow = new SignUpWindow();
 
-                // Show the SignUpWindow
+               
                 signUpWindow.Show();
             this.Close();
             

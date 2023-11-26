@@ -14,18 +14,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Search bar for filtering by some field -->
+       
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,10" Width="384">
-            <!-- Add controls for filtering as needed -->
+           
 
-            <!-- Sort ComboBox -->
+          
             <ComboBox x:Name="sortComboBox" Grid.Row="0" HorizontalAlignment="Right" Margin="10" SelectedIndex="0">
                 <ComboBoxItem Content="Sort By:" IsEnabled="False"/>
                 <ComboBoxItem Content="Farmer ID" Tag="FarmerID"/>
-                <!-- Add more sorting options as needed -->
+              
             </ComboBox>
 
-            <!-- Sort button -->
+           
             <Button Content="Sort by" Click="SortButton_Click" Height="27" Margin="5" Width="62" Background="#FF292998">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -45,7 +45,7 @@
             </Button>
 
 
-            <!-- Filter By button -->
+           
             <Button Content="Filter by" Click="FilterByButton_Click" Height="27" Margin="5" Width="62" Background="#FF292998">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -66,15 +66,15 @@
 
         </StackPanel>
 
-        <!-- Search bar -->
+        
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <TextBox x:Name="searchTextBox" Width="214" TextChanged="SearchTextBox_TextChanged"/>
             <TextBlock Text="Search..." VerticalAlignment="Center" Foreground="Gray" Margin="5">
-                <!-- TextBlock.Style... -->
+               
             </TextBlock>
         </StackPanel>
 
-        <!-- DataGrid to display farmer data -->
+        
         <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10"
           CanUserSortColumns="True" Sorting="DataGrid_Sorting">
             <DataGrid.Columns>
@@ -83,9 +83,7 @@
                 <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" />
                 <DataGridTextColumn Header="Contact" Binding="{Binding Contact}" />
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
-                <!-- Add more columns as needed -->
-
-                <!-- Edit column with button -->
+               
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -114,7 +112,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Delete column with button -->
+               
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -146,7 +144,7 @@
         </DataGrid>
 
 
-        <!-- Buttons for CRUD operations and pagination -->
+        
         <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

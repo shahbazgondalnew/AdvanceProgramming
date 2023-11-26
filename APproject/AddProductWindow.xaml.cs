@@ -17,18 +17,18 @@ namespace APproject
         {
             if (AreFieldsValid())
             {
-                // Get values from the text boxes and date picker
+               
                 string productName = productNameTextBox.Text;
                 decimal price = Convert.ToDecimal(priceTextBox.Text);
                 string policy = policyTextBox.Text;
                 int batch = Convert.ToInt32(batchTextBox.Text);
-                DateTime expireDate = expireDatePicker.SelectedDate ?? DateTime.Now; // Use DateTime.Now if SelectedDate is null
+                DateTime expireDate = expireDatePicker.SelectedDate ?? DateTime.Now; 
                 int quality = Convert.ToInt32(qualityTextBox.Text);
 
-                // Perform the insert operation
+                
                 InsertProduct(productName, price, policy, batch, expireDate, quality);
 
-                // Close the window after saving
+                
                 Close();
             }
             else
@@ -39,7 +39,7 @@ namespace APproject
 
         private bool AreFieldsValid()
         {
-            // Check if all fields are filled
+            
             return !string.IsNullOrEmpty(productNameTextBox.Text) &&
                    !string.IsNullOrEmpty(priceTextBox.Text) &&
                    !string.IsNullOrEmpty(policyTextBox.Text) &&
@@ -56,7 +56,7 @@ namespace APproject
                 {
                     connection.Open();
 
-                    // Insert query
+                    
                     string insertSql = @"
                         INSERT INTO Product (Product_Name, Price, Policy, Batch, ExpireDate, Quality)
                         VALUES (@ProductName, @Price, @Policy, @Batch, @ExpireDate, @Quality);
@@ -64,7 +64,7 @@ namespace APproject
 
                     using (SqlCommand insertCommand = new SqlCommand(insertSql, connection))
                     {
-                        // Set parameters
+                        
                         insertCommand.Parameters.AddWithValue("@ProductName", productName);
                         insertCommand.Parameters.AddWithValue("@Price", price);
                         insertCommand.Parameters.AddWithValue("@Policy", policy);
@@ -72,7 +72,7 @@ namespace APproject
                         insertCommand.Parameters.AddWithValue("@ExpireDate", expireDate);
                         insertCommand.Parameters.AddWithValue("@Quality", quality);
 
-                        // Execute the insert command
+                       
                         insertCommand.ExecuteNonQuery();
                     }
 

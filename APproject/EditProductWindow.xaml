@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Edit Product" Height="300" Width="400">
     <Grid>
-        <!-- Add text fields for editing each property -->
+       
         <StackPanel Margin="10">
             <TextBlock Text="Product Name:"/>
             <TextBox x:Name="productNameTextBox" Text="{Binding Product_Name}" Margin="0,0,0,10"/>
@@ -23,7 +23,7 @@
             <TextBlock Text="Quality:"/>
             <TextBox x:Name="qualityTextBox" Text="{Binding Quality}" Margin="0,0,0,10"/>
 
-            <!-- Save button -->
+           
             <Button Content="Save" Click="SaveButton_Click"/>
         </StackPanel>
     </Grid>

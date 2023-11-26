@@ -14,11 +14,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Search bar for filtering by Expiry Date -->
+        
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,10" Width="446">
             <DatePicker x:Name="expireDatePicker" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateEnd="{x:Static sys:DateTime.Now}" Width="125" Margin="5" SelectedDateChanged="ExpireDatePicker_SelectedDateChanged"/>
 
-            <!-- Sort ComboBox -->
+            
             <ComboBox x:Name="sortComboBox" Grid.Row="0" HorizontalAlignment="Right" Margin="10" SelectedIndex="0">
                 <ComboBox.Resources>
                     <Style x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
@@ -66,7 +66,7 @@
                     </Style>
                 </ComboBox.Resources>
 
-                <!-- ComboBox items -->
+               
                 <ComboBoxItem Content="Sort By:" IsEnabled="False"/>
                 <ComboBoxItem Content="Product ID" Tag="ProductID"/>
                 <ComboBoxItem Content="Product Name" Tag="Product_Name"/>
@@ -98,7 +98,7 @@
             </Button>
 
 
-            <!-- Filter By button -->
+            
             <Button Content="Filter by" Click="FilterByButton_Click" Height="27" Margin="5" Width="62" Background="#FF292998">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -119,15 +119,15 @@
 
         </StackPanel>
 
-        <!-- Search bar -->
+       
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <TextBox x:Name="searchTextBox" Width="214" TextChanged="SearchTextBox_TextChanged"/>
             <TextBlock Text="Search..." VerticalAlignment="Center" Foreground="Gray" Margin="5">
-                <!-- TextBlock.Style... -->
+              
             </TextBlock>
         </StackPanel>
 
-        <!-- DataGrid to display products -->
+       
         <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10"
                   CanUserSortColumns="True" Sorting="DataGrid_Sorting">
             <DataGrid.Columns>
@@ -139,7 +139,7 @@
                 <DataGridTextColumn Header="Expire Date" Binding="{Binding ExpireDate, StringFormat=\{0:dd/MM/yyyy\}}" />
                 <DataGridTextColumn Header="Quality" Binding="{Binding Quality}" />
 
-                <!-- Edit column with button -->
+                
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -169,7 +169,7 @@
                 </DataGridTemplateColumn>
 
 
-                <!-- Delete column with button -->
+                
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -201,8 +201,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Buttons for CRUD operations and pagination -->
-        <!-- Buttons for CRUD operations and pagination -->
+       
         <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

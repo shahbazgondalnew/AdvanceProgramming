@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace APproject
 {
-    /// <summary>
-    /// Interaction logic for reportOp.xaml
-    /// </summary>
+    
     public partial class reportOp : UserControl
     {
         public reportOp()

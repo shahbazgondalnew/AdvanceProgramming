@@ -18,7 +18,7 @@ namespace APproject
             string password = txtPassword.Password;
             string confirmPassword = txtConfirmPassword.Password;
 
-            // Validate input
+           
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
             {
                 MessageBox.Show("All fields are required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -31,17 +31,17 @@ namespace APproject
                 return;
             }
 
-            // Insert data into the database
+            
             try
             {
-                // TODO: Update connection string with your database information
+                
                 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    // Insert user data into the userauth table
+                    
                     string sql = "INSERT INTO userauth (Name, Email, Password) VALUES (@Name, @Email, @Password)";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -55,7 +55,7 @@ namespace APproject
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Sign-up successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.Close(); // Close the sign-up window after successful sign-up
+                            this.Close(); 
                             MainWindow mainScreenOPen = new MainWindow();
                             mainScreenOPen.Show();
                         }

@@ -14,10 +14,7 @@ using System.Windows.Shapes;
 
 namespace APproject
 {
-    /// <summary>
-    /// Interaction logic for mainScreen.xaml
-    /// </summary>
-
+   
 
 
 
@@ -41,7 +38,7 @@ namespace APproject
             {
                 string screenName = menuItem.Tag.ToString();
 
-                // Dynamically set the content based on the selected menu item
+               
                 switch (screenName)
                 {
                     case "FarmersScreen":
@@ -82,11 +79,11 @@ namespace APproject
 
             if (result == MessageBoxResult.Yes)
             {
-                // Assuming MainWindow is your login or main window
+                
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
 
-                // Close the current window
+               
                 this.Close();
             }
         }

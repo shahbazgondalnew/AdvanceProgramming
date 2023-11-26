@@ -20,7 +20,7 @@ namespace APproject
             InitializeComponent();
             editedFarmer = farmer;
 
-            // Populate text boxes with current data
+            
             txtName.Text = editedFarmer.Name;
             txtBalance.Text = editedFarmer.Balance.ToString();
             txtContact.Text = editedFarmer.Contact;
@@ -61,17 +61,17 @@ namespace APproject
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate input before saving
+            
             if (!ValidateInput())
             {
                 return;
             }
 
-            // Save the edited farmer details to the database
+           
             if (SaveFarmerDetails())
             {
                 MessageBox.Show("Farmer details saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                // Close the window
+              
                 this.Close();
 
             }
@@ -86,17 +86,17 @@ namespace APproject
             {
                 try
                 {
-                    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True"; // Replace with your actual connection string
+                    string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True"; 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
 
-                        // Assuming you have a table named 'Farmer' in your database
+                       
                         string updateQuery = "UPDATE Farmer SET Name = @Name, Contact = @Contact, Address = @Address, Balance = @Balance WHERE farmer_id = @FarmerID";
 
                         using (SqlCommand command = new SqlCommand(updateQuery, connection))
                         {
-                            // Add parameters to prevent SQL injection
+                           
                             command.Parameters.AddWithValue("@Name", txtName.Text);
                             command.Parameters.AddWithValue("@Contact", txtContact.Text);
                             command.Parameters.AddWithValue("@Address", txtAddress.Text);
@@ -105,14 +105,14 @@ namespace APproject
 
                             int rowsAffected = command.ExecuteNonQuery();
 
-                            // Check if the update was successful
+                           
                             return rowsAffected > 0;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Log the exception or handle it as needed
+                    
                     MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
