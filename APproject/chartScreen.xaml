@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-       
-        <lvc:CartesianChart Series="{Binding BarSeries}" LegendLocation="Right" Margin="-8,98,368,60" RenderTransformOrigin="0.5,0.5">
+
+        <lvc:CartesianChart Series="{Binding BarSeries}" LegendLocation="Right" Margin="-8,98,454,60" RenderTransformOrigin="0.5,0.5">
             <lvc:CartesianChart.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -26,11 +26,11 @@
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
-        
+
         <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Width="1" Margin="10" />
 
-        
-        <lvc:PieChart Series="{Binding PieSeries}" LegendLocation="Right" Margin="304,46,-149,46">
+
+        <lvc:PieChart Series="{Binding PieSeries}" LegendLocation="Right" Margin="468,89,-61,39">
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip />
             </lvc:PieChart.DataTooltip>

@@ -7,20 +7,20 @@
         mc:Ignorable="d"
         Title="mainScreen" Height="746" Width="961">
     <Window.Resources>
-        
+
         <Style x:Key="LogoImageStyle" TargetType="{x:Type Image}">
             <Setter Property="Width" Value="40"/>
             <Setter Property="Height" Value="40"/>
         </Style>
 
-       
+
         <Style x:Key="CustomMenuStyle" TargetType="{x:Type Menu}">
             <Setter Property="Background" Value="#FFF0F0F0"/>
-           
+
             <Setter Property="BorderBrush" Value="#FFD0D0D0"/>
-            
+
             <Setter Property="BorderThickness" Value="1"/>
-           
+
         </Style>
     </Window.Resources>
 
@@ -30,19 +30,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-       
+
         <Menu x:Name="customMenu" Style="{StaticResource CustomMenuStyle}">
-           
+
             <MenuItem Grid.Row="0">
                 <MenuItem.Header>
                     <Border Background="#FFFFFF" Margin="5">
-                        
+
                         <Image Style="{StaticResource LogoImageStyle}" Source="/Logo.png"/>
                     </Border>
                 </MenuItem.Header>
             </MenuItem>
 
-           
+
             <MenuItem Header="Farmers" Click="MenuItem_Click" Tag="FarmersScreen"/>
             <MenuItem Header="Products" Click="MenuItem_Click" Tag="ProductsScreen"/>
             <MenuItem Header="Credit" Click="MenuItem_Click" Tag="CreditsScreen"/>
@@ -51,15 +51,15 @@
             <MenuItem x:Name="addProductMenuItem" Header="Add Product" Click="AddProductMenuItem_Click" Visibility="Collapsed"/>
         </Menu>
 
-       
+
         <Menu Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top">
             <MenuItem Header="Logout" Click="LogoutMenuItem_Click"/>
         </Menu>
 
-       
-        <ContentControl x:Name="contentArea" Grid.Row="1" Margin="10,10,10,0">
-            
-            <TextBlock Text="Welcome to the main screen content!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <ContentControl x:Name="contentArea" Grid.Row="1" HorizontalAlignment="Right" Width="941" Height="637" VerticalAlignment="Top" Margin="0,39,10,0">
+
+            <Image HorizontalAlignment="Left" Margin="47,105,0,10" Width="913" Source="/Sustainable-Digital-Agri-thumbnail.jfif"/>
         </ContentControl>
     </Grid>
 </Window>
