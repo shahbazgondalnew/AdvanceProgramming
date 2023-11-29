@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,11 +23,13 @@ namespace APproject
         {
             try
             {
-                // Your connection string
                 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
-
-                // SQL query to fetch data from the database
-                string sql = "SELECT cid, amount, date, type FROM credit";
+                string sql = "SELECT c.cid, c.amount, c.date,  c.type, c.id, " +
+                             "CASE WHEN c.typeOfTransaction = 'farmer' THEN f.name " +
+                             "WHEN c.typeOfTransaction = 'company' THEN com.name END AS TypeName " +
+                             "FROM credit c " +
+                             "LEFT JOIN farmer f ON c.id = f.farmer_id " +
+                             "LEFT JOIN company com ON c.id = com.companyID";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -38,25 +39,23 @@ namespace APproject
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            // Initialize ObservableCollection for DataGrid
                             AccountingItems = new ObservableCollection<AccountingItem>();
                             TotalCredit = 0;
                             TotalDebit = 0;
 
                             while (reader.Read())
                             {
-                                // Populate AccountingItem objects from the database
                                 AccountingItem item = new AccountingItem
                                 {
                                     TransactionID = Convert.ToInt32(reader["cid"]),
                                     Amount = Convert.ToDecimal(reader["amount"]),
                                     Date = Convert.ToDateTime(reader["date"]),
-                                    TypeOfTransaction = reader["type"].ToString()
+                                    TypeOfTransaction = reader["type"].ToString(),
+                                    TypeName = reader["TypeName"].ToString()
                                 };
 
                                 AccountingItems.Add(item);
 
-                                // Update total credit and debit
                                 if (item.TypeOfTransaction == "credit")
                                 {
                                     TotalCredit += item.Amount;
@@ -65,24 +64,21 @@ namespace APproject
                                 {
                                     TotalDebit += item.Amount;
                                 }
+                                ///
+                                accountingDataGrid.ItemsSource = AccountingItems;
                             }
                         }
                     }
 
-                    // Set the DataContext to this instance
                     DataContext = this;
-
-                    // If data loading is successful, show the table
                     DataLoadErrorVisibility = Visibility.Collapsed;
                 }
             }
             catch (Exception ex)
             {
-                // If there's an issue, show error messages and log the exception
                 AccountingItems = new ObservableCollection<AccountingItem>();
                 DataLoadErrorVisibility = Visibility.Visible;
 
-                // Log or display the exception, for example:
                 MessageBox.Show($"Error loading table data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -94,5 +90,6 @@ namespace APproject
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public string TypeOfTransaction { get; set; }
+        public string TypeName { get; set; }
     }
 }
