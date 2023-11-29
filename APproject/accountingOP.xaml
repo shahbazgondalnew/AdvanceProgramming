@@ -15,8 +15,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Search Bar -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <TextBox x:Name="searchTextBox" Width="214" TextChanged="SearchTextBox_TextChanged" Visibility="Visible"/>
+            <TextBlock Text="Search..." VerticalAlignment="Center" Foreground="Gray" Margin="5"/>
+        </StackPanel>
+
         <DataGrid x:Name="accountingDataGrid" AutoGenerateColumns="False" Margin="10"
-              CanUserSortColumns="True">
+                  CanUserSortColumns="True" ItemsSource="{Binding AccountingItems}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Transaction ID" Binding="{Binding TransactionID}" />
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
@@ -26,7 +32,6 @@
                 <!-- Add more columns as needed -->
             </DataGrid.Columns>
         </DataGrid>
-
 
         <!-- Error Message Placeholder -->
         <TextBlock x:Name="dataGridError" Text="Error loading data. Please try again later."

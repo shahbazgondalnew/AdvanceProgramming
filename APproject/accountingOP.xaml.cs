@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,9 +17,17 @@ namespace APproject
         public accountingOP()
         {
             InitializeComponent();
+            DataContext = this;
             TryLoadTableData();  // Attempt to load table data
         }
-
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Filter the items based on the search text
+            string searchText = searchTextBox.Text.ToLower();
+            accountingDataGrid.ItemsSource = AccountingItems
+                .Where(item => item.TypeName.ToLower().Contains(searchText))
+                .ToList();
+        }
         private void TryLoadTableData()
         {
             try
