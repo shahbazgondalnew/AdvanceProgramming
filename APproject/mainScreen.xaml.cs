@@ -51,7 +51,7 @@ namespace APproject
                         break;
 
                     case "CreditsScreen":
-                        contentArea.Content = new ProductsOp();
+                        contentArea.Content = new accountingOP();
                         addProductMenuItem.Visibility = Visibility.Collapsed;
                         break;
 
