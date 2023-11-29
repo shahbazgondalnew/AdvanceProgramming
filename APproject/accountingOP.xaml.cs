@@ -24,7 +24,7 @@ namespace APproject
             try
             {
                 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
-                string sql = "SELECT c.cid, c.amount, c.date,  c.type, c.id, " +
+                string sql = "SELECT c.cid, c.amount, c.date,c.type, c.typeOfTransaction, c.id, " +
                              "CASE WHEN c.typeOfTransaction = 'farmer' THEN f.name " +
                              "WHEN c.typeOfTransaction = 'company' THEN com.name END AS TypeName " +
                              "FROM credit c " +
@@ -64,14 +64,16 @@ namespace APproject
                                 {
                                     TotalDebit += item.Amount;
                                 }
-                                ///
-                                accountingDataGrid.ItemsSource = AccountingItems;
                             }
                         }
                     }
 
+                    // Set the DataContext to this instance
                     DataContext = this;
                     DataLoadErrorVisibility = Visibility.Collapsed;
+
+                    // Bind the data to the DataGrid
+                    accountingDataGrid.ItemsSource = AccountingItems;
                 }
             }
             catch (Exception ex)
