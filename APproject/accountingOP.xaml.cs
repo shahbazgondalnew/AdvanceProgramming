@@ -1,11 +1,7 @@
-﻿using LiveCharts;
-using LiveCharts.Defaults;
-using LiveCharts.Helpers;
-using LiveCharts.Wpf;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,114 +9,90 @@ namespace APproject
 {
     public partial class accountingOP : UserControl
     {
-        public SeriesCollection BarChartValues { get; set; }
-        public ObservableCollection<string> Labels { get; set; }
-        public ObservableCollection<AccountingTransaction> Transactions { get; set; }
+        public ObservableCollection<AccountingItem> AccountingItems { get; set; }
+        public Visibility DataLoadErrorVisibility { get; set; }
+        public decimal TotalCredit { get; set; }
+        public decimal TotalDebit { get; set; }
 
         public accountingOP()
         {
             InitializeComponent();
-            DataContext = new AccountingViewModel();
-        }
-    }
-
-    public class AccountingTransaction
-    {
-        public int TransactionID { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime Date { get; set; }
-        // Add more properties as needed
-    }
-
-    public class AccountingViewModel
-    {
-        public SeriesCollection BarChartValues { get; set; }
-        public ObservableCollection<string> Labels { get; set; }
-        public ObservableCollection<AccountingTransaction> Transactions { get; set; }
-
-        public AccountingViewModel()
-        {
-            LoadData();
+            TryLoadTableData();  // Attempt to load table data
         }
 
-        private void LoadData()
+        private void TryLoadTableData()
         {
             try
             {
+                // Your connection string
                 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
+
+                // SQL query to fetch data from the database
+                string sql = "SELECT cid, amount, date, type FROM credit";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    string queryBarChart = "SELECT cid, Amount, Date,typeOfTransaction FROM credit";
-
-                    using (SqlCommand command = new SqlCommand(queryBarChart, connection))
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        ObservableCollection<ObservableValue> creditValues = new ObservableCollection<ObservableValue>();
-                        ObservableCollection<ObservableValue> debitValues = new ObservableCollection<ObservableValue>();
-                        ObservableCollection<string> labels = new ObservableCollection<string>();
-                        ObservableCollection<AccountingTransaction> transactions = new ObservableCollection<AccountingTransaction>();
-
-                        while (reader.Read())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            int transactionID = reader.GetInt32(0);
-                            decimal amount = reader.GetDecimal(1);
-                            DateTime date = reader.GetDateTime(2);
+                            // Initialize ObservableCollection for DataGrid
+                            AccountingItems = new ObservableCollection<AccountingItem>();
+                            TotalCredit = 0;
+                            TotalDebit = 0;
 
-                            transactions.Add(new AccountingTransaction
+                            while (reader.Read())
                             {
-                                TransactionID = transactionID,
-                                Amount = amount,
-                                Date = date
-                            });
+                                // Populate AccountingItem objects from the database
+                                AccountingItem item = new AccountingItem
+                                {
+                                    TransactionID = Convert.ToInt32(reader["cid"]),
+                                    Amount = Convert.ToDecimal(reader["amount"]),
+                                    Date = Convert.ToDateTime(reader["date"]),
+                                    TypeOfTransaction = reader["type"].ToString()
+                                };
 
-                            // Assuming 'Type' is a column in your database indicating Credit or Debit
-                            string type = reader["typeOfTransaction"].ToString();
-                            Console.WriteLine(type);
+                                AccountingItems.Add(item);
 
-                            if (type == "credit")
-
-                            {
-
-                                creditValues.Add(new ObservableValue((double)amount));
-                            }
-                            else if (type == "debit")
-                            {
-                                debitValues.Add(new ObservableValue((double)amount));
-
+                                // Update total credit and debit
+                                if (item.TypeOfTransaction == "credit")
+                                {
+                                    TotalCredit += item.Amount;
+                                }
+                                else if (item.TypeOfTransaction == "debit")
+                                {
+                                    TotalDebit += item.Amount;
+                                }
                             }
                         }
-
-                        SeriesCollection barChartValues = new SeriesCollection
-                        {
-                            new ColumnSeries
-                            {
-                                Title = "Credit",
-                                Values = creditValues.AsChartValues()  // Explicit conversion here
-                            },
-                            new ColumnSeries
-                            {
-                                Title = "Debit",
-                                Values = debitValues.AsChartValues()   // Explicit conversion here
-                            }
-                        };
-
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            BarChartValues = barChartValues;
-                            Labels = labels;
-                            Transactions = transactions;
-                        });
                     }
+
+                    // Set the DataContext to this instance
+                    DataContext = this;
+
+                    // If data loading is successful, show the table
+                    DataLoadErrorVisibility = Visibility.Collapsed;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // If there's an issue, show error messages and log the exception
+                AccountingItems = new ObservableCollection<AccountingItem>();
+                DataLoadErrorVisibility = Visibility.Visible;
+
+                // Log or display the exception, for example:
+                MessageBox.Show($"Error loading table data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+    }
+
+    public class AccountingItem
+    {
+        public int TransactionID { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime Date { get; set; }
+        public string TypeOfTransaction { get; set; }
     }
 }
