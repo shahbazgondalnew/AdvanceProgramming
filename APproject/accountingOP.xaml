@@ -16,13 +16,27 @@
         </Grid.RowDefinitions>
 
         <!-- Search Bar -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <TextBox x:Name="searchTextBox" Width="214" TextChanged="SearchTextBox_TextChanged" Visibility="Visible"/>
             <TextBlock Text="Search..." VerticalAlignment="Center" Foreground="Gray" Margin="5"/>
         </StackPanel>
 
-        <DataGrid x:Name="accountingDataGrid" AutoGenerateColumns="False" Margin="10"
-                  CanUserSortColumns="True" ItemsSource="{Binding AccountingItems}">
+        <!-- Graph Section -->
+        <lvc:CartesianChart Series="{Binding BarSeries}" LegendLocation="Right" Margin="10,0,10,0" Height="250" VerticalAlignment="Top" Grid.Row="1">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Month" Labels="{Binding BarLabels}" />
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Amount" LabelFormatter="{Binding Formatter}" />
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+
+        <!-- Separator Line -->
+        <Border Grid.Row="1" Height="1" Background="Black" Margin="10,160,10,0"/>
+
+        <!-- Table Section -->
+        <DataGrid x:Name="accountingDataGrid" AutoGenerateColumns="False" Margin="10,170,20,10"
+                  CanUserSortColumns="True" ItemsSource="{Binding AccountingItems}" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Transaction ID" Binding="{Binding TransactionID}" />
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
