@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Globalization;
 
 namespace APproject
 {
@@ -49,7 +50,7 @@ namespace APproject
             InitializeComponent();
             DataContext = this;
             TryLoadTableData();  // Attempt to load table data
-            GenerateRandomChartData();
+            GenerateSearchChartData();
         }
         private SeriesCollection barSeries;
         public SeriesCollection BarSeries
@@ -78,6 +79,8 @@ namespace APproject
                 }
             }
         }
+
+
         private void GenerateRandomChartData()
         {
             Random random = new Random();
@@ -93,21 +96,147 @@ namespace APproject
 
                 // Check if there is a search query
                 string searchText = searchTextBox.Text.ToLower();
-                var filteredItems = AccountingItems
-                    .Where(item => item.TypeName.ToLower().Contains(searchText) && item.Date.ToString("MMM") == month)
-                    .ToList();
 
-                // If search results are found for the specific month, generate data for search results
-                if (filteredItems.Any())
+                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
+                // Update the SQL query to filter data for each month
+                string sql = "SELECT c.cid, c.amount, c.date,c.type, c.typeOfTransaction, c.id, " +
+                             "CASE WHEN c.typeOfTransaction = 'farmer' THEN f.name " +
+                             "WHEN c.typeOfTransaction = 'company' THEN com.name END AS TypeName " +
+                             "FROM credit c " +
+                             "LEFT JOIN farmer f ON c.id = f.farmer_id " +
+                             "LEFT JOIN company com ON c.id = com.companyID " +
+                             $"WHERE MONTH(c.date) = {GetMonthNumber(month)}";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    creditData.Add((double)filteredItems.Where(item => item.TypeOfTransaction == "credit").Sum(item => item.Amount));
-                    debitData.Add((double)filteredItems.Where(item => item.TypeOfTransaction == "debit").Sum(item => item.Amount));
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            var filteredItems = new List<AccountingItem>();
+                            while (reader.Read())
+                            {
+                                AccountingItem item = new AccountingItem
+                                {
+                                    TransactionID = Convert.ToInt32(reader["cid"]),
+                                    Amount = Convert.ToDecimal(reader["amount"]),
+                                    Date = Convert.ToDateTime(reader["date"]),
+                                    TypeOfTransaction = reader["type"].ToString(),
+                                    TypeName = reader["TypeName"].ToString()
+                                };
+
+                                filteredItems.Add(item);
+                            }
+
+                            // If search results are found for the specific month, generate data for search results
+                            if (filteredItems.Any())
+                            {
+                                creditData.Add((double)filteredItems.Where(item => item.TypeOfTransaction == "credit").Sum(item => item.Amount));
+                                debitData.Add((double)filteredItems.Where(item => item.TypeOfTransaction == "debit").Sum(item => item.Amount));
+                            }
+                            else
+                            {
+                                // If no search results or search is empty for the specific month, generate random data
+                                creditData.Add(random.Next(1, 100)); // Replace with your actual credit data logic
+                                debitData.Add(random.Next(1, 100));  // Replace with your actual debit data logic
+                            }
+                        }
+                    }
+                    connection.Close();
                 }
-                else
+            }
+
+            // Update the chart data
+            BarLabels = barLabels;
+            BarSeries = new SeriesCollection
+    {
+        new ColumnSeries { Title = "Credit", Values = new ChartValues<double>(creditData) },
+        new ColumnSeries { Title = "Debit", Values = new ChartValues<double>(debitData) }
+    };
+        }
+        private void GenerateSearchChartData()
+        {
+            Random random = new Random();
+            var months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+            var barLabels = new List<string>();
+            var creditData = new List<double>();
+            var debitData = new List<double>();
+
+            foreach (var month in months)
+            {
+                int  transMonth=99;
+                barLabels.Add(month);
+
+                // Check if there is a search query
+                string searchText = searchTextBox.Text.ToLower();
+
+                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True";
+                // Update the SQL query to filter data for each month
+                string sql = 
+
+                "SELECT c.cid, c.amount, c.date,c.type, c.typeOfTransaction, c.id, " +
+                             "CASE WHEN c.typeOfTransaction = 'farmer' THEN f.name " +
+                             "WHEN c.typeOfTransaction = 'company' THEN com.name END AS TypeName " +
+                             "FROM credit c " +
+                             "LEFT JOIN farmer f ON c.id = f.farmer_id " +
+                             "LEFT JOIN company com ON c.id = com.companyID " +
+                             $"WHERE MONTH(c.date) = {GetMonthNumber(month)}";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    // If no search results or search is empty for the specific month, generate random data
-                    creditData.Add(random.Next(1, 100)); // Replace with your actual credit data logic
-                    debitData.Add(random.Next(1, 100));  // Replace with your actual debit data logic
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            var filteredItems = new List<AccountingItem>();
+                            while (reader.Read())
+                            {
+                                DateTime Date = Convert.ToDateTime(reader["date"]);
+                                transMonth = Date.Month;
+
+                                AccountingItem item = new AccountingItem
+                                {
+                                    TransactionID = Convert.ToInt32(reader["cid"]),
+                                    Amount = Convert.ToDecimal(reader["amount"]),
+                                    Date = Convert.ToDateTime(reader["date"]),
+                                    TypeOfTransaction = reader["type"].ToString(),
+                                    TypeName = reader["TypeName"].ToString(),
+
+                                };
+
+                                filteredItems.Add(item);
+
+                            }
+                            
+                            var filteredItemsChar = AccountingItems
+                .Where(item => item.TypeName.ToLower().Contains(searchText.ToLower()))
+                .ToList();
+                            // If search results are found for the specific month, generate data for search results
+
+                            if (filteredItemsChar.Any())
+                            {
+                                if(GetMonthNumber(month)==transMonth)
+                                {
+                                    creditData.Add((double)filteredItemsChar.Where(item => item.TypeOfTransaction == "credit").Sum(item => item.Amount));
+                                    debitData.Add((double)filteredItemsChar.Where(item => item.TypeOfTransaction == "debit").Sum(item => item.Amount));
+                                }
+                                
+                                
+                            }
+                            else
+                            {
+                                // If no search results or search is empty for the specific month, generate random data
+                                creditData.Add(random.Next(1, 100)); // Replace with your actual credit data logic
+                                debitData.Add(random.Next(1, 100));  // Replace with your actual debit data logic
+                            }
+                        }
+                    }
+                    connection.Close();
                 }
             }
 
@@ -120,6 +249,14 @@ namespace APproject
     };
         }
 
+        private int GetMonthNumber(string month)
+        {
+            DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
+            return Array.IndexOf(dtfi.MonthNames, month) + 1;
+        }
+
+
+
 
 
 
@@ -130,6 +267,7 @@ namespace APproject
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Filter the items based on the search text
+            
             string searchText = searchTextBox.Text.ToLower();
             var filteredItems = AccountingItems
                 .Where(item => item.TypeName.ToLower().Contains(searchText))
@@ -141,9 +279,15 @@ namespace APproject
 
             // Update the DataGrid with the filtered items
             accountingDataGrid.ItemsSource = filteredItems;
+            
+
+                GenerateSearchChartData();
+           
+            
+            
         }
-       
-       
+
+
 
         private void TryLoadTableData()
         {
@@ -200,7 +344,8 @@ namespace APproject
 
                     // Bind the data to the DataGrid
                     accountingDataGrid.ItemsSource = AccountingItems;
-                    
+                    connection.Close();
+
                 }
             }
             catch (Exception ex)
