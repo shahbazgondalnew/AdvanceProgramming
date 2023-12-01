@@ -90,23 +90,44 @@ namespace APproject
             foreach (var month in months)
             {
                 barLabels.Add(month);
-                creditData.Add(random.Next(1, 100)); // Replace with your actual credit data logic
-                debitData.Add(random.Next(1, 100));  // Replace with your actual debit data logic
+
+                // Check if there is a search query
+                string searchText = searchTextBox.Text.ToLower();
+                var filteredItems = AccountingItems
+                    .Where(item => item.TypeName.ToLower().Contains(searchText) && item.Date.ToString("MMM") == month)
+                    .ToList();
+
+                // If search results are found for the specific month, generate data for search results
+                if (filteredItems.Any())
+                {
+                    creditData.Add((double)filteredItems.Where(item => item.TypeOfTransaction == "credit").Sum(item => item.Amount));
+                    debitData.Add((double)filteredItems.Where(item => item.TypeOfTransaction == "debit").Sum(item => item.Amount));
+                }
+                else
+                {
+                    // If no search results or search is empty for the specific month, generate random data
+                    creditData.Add(random.Next(1, 100)); // Replace with your actual credit data logic
+                    debitData.Add(random.Next(1, 100));  // Replace with your actual debit data logic
+                }
             }
 
+            // Update the chart data
             BarLabels = barLabels;
             BarSeries = new SeriesCollection
-            {
-                new ColumnSeries { Title = "Credit", Values = new ChartValues<double>(creditData) },
-                new ColumnSeries { Title = "Debit", Values = new ChartValues<double>(debitData) }
-            };
+    {
+        new ColumnSeries { Title = "Credit", Values = new ChartValues<double>(creditData) },
+        new ColumnSeries { Title = "Debit", Values = new ChartValues<double>(debitData) }
+    };
         }
 
-        // Existing code...
-    
 
 
-    private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+
+
+
+
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Filter the items based on the search text
             string searchText = searchTextBox.Text.ToLower();
